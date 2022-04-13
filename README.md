@@ -1,1 +1,2 @@
 # CourseManagement
+![EER](EER.png)
