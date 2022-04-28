@@ -1,22 +1,70 @@
 package com.example.coursemanagement.service;
 
-import com.example.coursemanagement.model.Department;
-import com.example.coursemanagement.model.Student;
+import com.example.coursemanagement.common.CourseStatus;
+import com.example.coursemanagement.model.*;
+import com.example.coursemanagement.repository.CourseRepository;
 import com.example.coursemanagement.repository.DepartmentRepository;
 import com.example.coursemanagement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
+    private final CourseRepository courseRepository;
 
-    public StudentService(StudentRepository studentRepository, DepartmentRepository departmentRepository) {
+    public StudentService(StudentRepository studentRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository) {
         super();
         this.studentRepository = studentRepository;
         this.departmentRepository = departmentRepository;
+        this.courseRepository = courseRepository;
+
+    }
+
+    public List<Course> getAvailableCourses(long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
+
+
+        List<Course> allCourses = courseRepository.findAll();
+        List<Course> result = new ArrayList<>();
+
+        Set<TimeSlot> studentTimeSlots = new HashSet<>();
+        Set<CourseStudent> courseStudents = student.getCourses();
+        Set<Course> courses = new HashSet<>();
+        for (CourseStudent cs: courseStudents) {
+            Course c = cs.getCourse();
+            courses.add(c);
+
+            if (cs.getCourseStatus() == CourseStatus.ENROLLED)
+
+                studentTimeSlots.addAll(c.getTimeslots());
+
+        }
+//        System.out.println(studentTimeSlots);
+
+        for (Course c : allCourses) {
+            if (!courses.contains(c)) {
+                boolean conflict = false;
+                for (TimeSlot t : c.getTimeslots()) {
+                    if (studentTimeSlots.contains(t)) {
+                        conflict = true;
+                        break;
+                    }
+                }
+
+                if (!conflict) {
+                    result.add(c);
+                }
+            }
+
+        }
+
+        return result;
     }
 
 
@@ -46,6 +94,7 @@ public class StudentService {
         existingStudent.setFirstName(student.getFirstName());
         existingStudent.setLastName(student.getLastName());
         existingStudent.setEmail(student.getEmail());
+        existingStudent.setDepartment(student.getDepartment());
 //        existingStudent.setLastName(student.getLastName());
 
         studentRepository.save(existingStudent);

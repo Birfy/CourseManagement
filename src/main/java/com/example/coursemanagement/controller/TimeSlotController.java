@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/timeslots")
 public class TimeSlotController {
-    private TimeSlotService timeSlotService;
+    private final TimeSlotService timeSlotService;
 
     public TimeSlotController(TimeSlotService timeSlotService) {
         super();
@@ -34,15 +35,4 @@ public class TimeSlotController {
         return new ResponseEntity<>(timeSlotService.getTimeSlotById(timeSlotId), HttpStatus.OK);
     }
 
-//    @PutMapping({"{id}"})
-//    public ResponseEntity<TimeSlot> updateTimeSlot(@RequestBody TimeSlot timeSlot,
-//                                                   @PathVariable("id") long timeSlotId) {
-//        return new ResponseEntity<>(timeSlotService.updateTimeSlot(timeSlot, timeSlotId), HttpStatus.OK);
-//    }
-
-//    @DeleteMapping({"{id}"})
-//    public ResponseEntity<String> deleteTimeSlot(@PathVariable("id") long TimeSlotId) {
-//        TimeSlotService.deleteTimeSlot(TimeSlotId);
-//        return new ResponseEntity<>("Employee deleted successfully!", HttpStatus.OK);
-//    }
 }

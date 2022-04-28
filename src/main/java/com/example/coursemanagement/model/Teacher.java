@@ -31,6 +31,6 @@ public class Teacher {
     private Department department;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = { CascadeType.REMOVE })
     private Set<Course> courses;
 }

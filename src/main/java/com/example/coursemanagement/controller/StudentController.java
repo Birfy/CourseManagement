@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -46,9 +47,9 @@ public class StudentController {
     }
 
     @DeleteMapping({"{id}"})
-    public ResponseEntity<String> deleteStudent(@PathVariable("id") long studentId) {
-        studentService.deleteStudent(studentId);
-        return new ResponseEntity<>("Employee deleted successfully!", HttpStatus.OK);
+    public ResponseEntity<Student> deleteStudent(@PathVariable("id") long studentId) {
+        Student removedStudent = studentService.deleteStudent(studentId);
+        return new ResponseEntity<>(removedStudent, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/courses")
@@ -62,5 +63,10 @@ public class StudentController {
     public ResponseEntity<Student> assignDepartment(@PathVariable("studentId") long studentId,
                                                    @PathVariable("departmentId") long departmentId) {
         return new ResponseEntity<>(studentService.assignDepartmentById(studentId, departmentId), HttpStatus.OK);
+    }
+
+    @GetMapping("{studentId}/select")
+    public ResponseEntity<List<Course>> getAvailableCourses(@PathVariable("studentId") long studentId) {
+        return new ResponseEntity<>(studentService.getAvailableCourses(studentId), HttpStatus.OK);
     }
 }

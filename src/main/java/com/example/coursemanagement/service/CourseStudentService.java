@@ -12,6 +12,7 @@ import com.example.coursemanagement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -28,13 +29,15 @@ public class CourseStudentService {
     }
 
     public boolean isAvailable(Course course, Student student) {
-        Set<TimeSlot> courseTimeSlots = new HashSet<>(course.getTimeslots());
+        Set<TimeSlot> courseTimeSlots = course.getTimeslots();
 
         Set<TimeSlot> studentTimeSlots = new HashSet<>();
         Set<CourseStudent> courseStudents = student.getCourses();
         for (CourseStudent cs: courseStudents) {
+            Course c = cs.getCourse();
+            if (c.getId() == course.getId())
+                return false;
             if (cs.getCourseStatus() == CourseStatus.ENROLLED) {
-                Course c = cs.getCourse();
                 studentTimeSlots.addAll(c.getTimeslots());
             }
         }
@@ -44,6 +47,10 @@ public class CourseStudentService {
     }
 
 
+
+
+
+
     public CourseStudent enrollById(long courseId, long studentId) {
         Course course = courseRepository.findById(courseId).orElseThrow(RuntimeException::new);
         Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
@@ -51,13 +58,13 @@ public class CourseStudentService {
         courseStudent.setCourseStatus(CourseStatus.ENROLLED);
         courseStudent.setStudent(student);
         courseStudent.setCourse(course);
-        if (isAvailable(course, student)) {
+//        if (isAvailable(course, student)) {
+//
+        return courseStudentRepository.save(courseStudent);
+//        }
 
-            return courseStudentRepository.save(courseStudent);
-        }
 
-
-        return courseStudent;
+//        return courseStudent;
     }
 
     public CourseStudent dropById(long courseId, long studentId) {

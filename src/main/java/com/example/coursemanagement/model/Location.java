@@ -25,6 +25,6 @@ public class Location {
     private String room;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location", cascade = { CascadeType.REMOVE })
     private Set<Course> courses;
 }

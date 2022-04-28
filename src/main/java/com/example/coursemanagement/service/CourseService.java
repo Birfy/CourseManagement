@@ -50,6 +50,10 @@ public class CourseService {
 
 
         existingCourse.setName(course.getName());
+        existingCourse.setLocation(course.getLocation());
+        existingCourse.setDepartment(course.getDepartment());
+        existingCourse.setTeacher(course.getTeacher());
+        existingCourse.setTimeslots(course.getTimeslots());
 
         return courseRepository.save(existingCourse);
     }

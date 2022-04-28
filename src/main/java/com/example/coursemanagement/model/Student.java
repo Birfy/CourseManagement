@@ -21,7 +21,7 @@ public class Student {
     private long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = { CascadeType.REMOVE })
     private Set<CourseStudent> courses;
 
     @Column(nullable = false)

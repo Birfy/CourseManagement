@@ -23,15 +23,15 @@ public class Department {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = { CascadeType.REMOVE })
     private Set<Course> courses;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = { CascadeType.REMOVE })
     private Set<Student> students;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = { CascadeType.REMOVE })
     private Set<Teacher> teachers;
 
 

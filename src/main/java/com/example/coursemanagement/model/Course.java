@@ -19,7 +19,7 @@ public class Course {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = { CascadeType.REMOVE })
     private Set<CourseStudent> students;
 
     @ManyToOne
@@ -31,7 +31,7 @@ public class Course {
     @ManyToOne
     private Teacher teacher;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.REMOVE })
     @JoinTable
     private Set<TimeSlot> timeslots;
 

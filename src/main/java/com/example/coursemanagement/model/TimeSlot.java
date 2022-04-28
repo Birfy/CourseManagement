@@ -25,6 +25,6 @@ public class TimeSlot {
     private CourseTime courseTime;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "timeslots")
+    @ManyToMany(mappedBy = "timeslots", cascade = { CascadeType.REMOVE })
     Set<Course> courses;
 }
