@@ -7,13 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DepartmentService {
-    private final DepartmentRepository departmentRepository;
-
-    public DepartmentService(DepartmentRepository departmentRepository) {
-        super();
-        this.departmentRepository = departmentRepository;
-    }
+public record DepartmentService(DepartmentRepository departmentRepository) {
 
 
     public List<Department> addDepartments(List<Department> DepartmentList) {

@@ -13,18 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class StudentService {
-    private final StudentRepository studentRepository;
-    private final DepartmentRepository departmentRepository;
-    private final CourseRepository courseRepository;
-
-    public StudentService(StudentRepository studentRepository, DepartmentRepository departmentRepository, CourseRepository courseRepository) {
-        super();
-        this.studentRepository = studentRepository;
-        this.departmentRepository = departmentRepository;
-        this.courseRepository = courseRepository;
-
-    }
+public record StudentService(StudentRepository studentRepository,
+                             DepartmentRepository departmentRepository,
+                             CourseRepository courseRepository) {
 
     public List<Course> getAvailableCourses(long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(RuntimeException::new);
@@ -36,7 +27,7 @@ public class StudentService {
         Set<TimeSlot> studentTimeSlots = new HashSet<>();
         Set<CourseStudent> courseStudents = student.getCourses();
         Set<Course> courses = new HashSet<>();
-        for (CourseStudent cs: courseStudents) {
+        for (CourseStudent cs : courseStudents) {
             Course c = cs.getCourse();
             courses.add(c);
 

@@ -2,8 +2,6 @@ package com.example.coursemanagement.service;
 
 import com.example.coursemanagement.model.Department;
 import com.example.coursemanagement.model.Teacher;
-import com.example.coursemanagement.model.Teacher;
-import com.example.coursemanagement.model.Teacher;
 import com.example.coursemanagement.repository.DepartmentRepository;
 import com.example.coursemanagement.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
@@ -11,15 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TeacherService {
-    private final TeacherRepository teacherRepository;
-    private final DepartmentRepository departmentRepository;
-
-    public TeacherService(TeacherRepository teacherRepository, DepartmentRepository departmentRepository) {
-        super();
-        this.teacherRepository = teacherRepository;
-        this.departmentRepository = departmentRepository;
-    }
+public record TeacherService(TeacherRepository teacherRepository,
+                             DepartmentRepository departmentRepository) {
 
 
     public List<Teacher> addTeachers(List<Teacher> teacherList) {

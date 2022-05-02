@@ -7,14 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TimeSlotService {
-
-    private final TimeSlotRepository timeSlotRepository;
-
-    public TimeSlotService(TimeSlotRepository timeSlotRepository) {
-        super();
-        this.timeSlotRepository = timeSlotRepository;
-    }
+public record TimeSlotService(TimeSlotRepository timeSlotRepository) {
 
 
     public List<TimeSlot> addTimeSlots(List<TimeSlot> timeSlotList) {

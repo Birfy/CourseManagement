@@ -4,6 +4,7 @@ package com.example.coursemanagement.controller;
 import com.example.coursemanagement.common.CourseGrade;
 import com.example.coursemanagement.model.CourseStudent;
 import com.example.coursemanagement.service.CourseStudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

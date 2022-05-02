@@ -7,23 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CourseService {
-    private final CourseRepository courseRepository;
-    private final LocationRepository locationRepository;
-    private final DepartmentRepository departmentRepository;
-    private final TeacherRepository teacherRepository;
-    private final TimeSlotRepository timeSlotRepository;
-
-    public CourseService(CourseRepository courseRepository, LocationRepository locationRepository,
-                         DepartmentRepository departmentRepository, TeacherRepository teacherRepository,
-                         TimeSlotRepository timeSlotRepository) {
-        super();
-        this.courseRepository = courseRepository;
-        this.locationRepository = locationRepository;
-        this.departmentRepository = departmentRepository;
-        this.teacherRepository = teacherRepository;
-        this.timeSlotRepository = timeSlotRepository;
-    }
+public record CourseService(CourseRepository courseRepository,
+                            LocationRepository locationRepository,
+                            DepartmentRepository departmentRepository,
+                            TeacherRepository teacherRepository,
+                            TimeSlotRepository timeSlotRepository) {
 
 
     public List<Course> addCourses(List<Course> courseList) {

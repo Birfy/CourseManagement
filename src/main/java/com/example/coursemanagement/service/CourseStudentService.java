@@ -12,28 +12,20 @@ import com.example.coursemanagement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
-public class CourseStudentService {
-    private final CourseStudentRepository courseStudentRepository;
-    private final CourseRepository courseRepository;
-    private final StudentRepository studentRepository;
-
-    public CourseStudentService(CourseStudentRepository courseStudentRepository, CourseRepository courseRepository, StudentRepository studentRepository) {
-        super();
-        this.courseStudentRepository = courseStudentRepository;
-        this.courseRepository = courseRepository;
-        this.studentRepository = studentRepository;
-    }
+public record CourseStudentService(
+        CourseStudentRepository courseStudentRepository,
+        CourseRepository courseRepository,
+        StudentRepository studentRepository) {
 
     public boolean isAvailable(Course course, Student student) {
         Set<TimeSlot> courseTimeSlots = course.getTimeslots();
 
         Set<TimeSlot> studentTimeSlots = new HashSet<>();
         Set<CourseStudent> courseStudents = student.getCourses();
-        for (CourseStudent cs: courseStudents) {
+        for (CourseStudent cs : courseStudents) {
             Course c = cs.getCourse();
             if (c.getId() == course.getId())
                 return false;
@@ -45,10 +37,6 @@ public class CourseStudentService {
         courseTimeSlots.retainAll(studentTimeSlots);
         return courseTimeSlots.isEmpty();
     }
-
-
-
-
 
 
     public CourseStudent enrollById(long courseId, long studentId) {

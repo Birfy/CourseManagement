@@ -7,13 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LocationService {
-    private final LocationRepository locationRepository;
-
-    public LocationService(LocationRepository locationRepository) {
-        super();
-        this.locationRepository = locationRepository;
-    }
+public record LocationService(LocationRepository locationRepository) {
 
 
     public List<Location> addLocations(List<Location> locationList) {
